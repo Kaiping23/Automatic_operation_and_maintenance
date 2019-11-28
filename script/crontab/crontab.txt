@@ -1,0 +1,15 @@
+
+*/1 * * *  *  cd /var/log/nginx/heart_check/&&/bin/bash /var/log/nginx/heart_check/log_to_sql.sh
+*/30 * * * * /usr/sbin/ntpdate time7.aliyun.com >/dev/null 2>&1
+1 1 * * * docker rmi `docker images -aq` &>/dev/null
+# 以docker容器日志为准，定时清理日志
+*/5 * * * * find /logs/ -name "*log" |xargs -n1 -I{} bash -c "echo  > {} "
+# 删除历史日志文件
+1 1 * * *  cd /logs/ls |grep -vwE `ls|awk '{match($0,/(.*?)-[0-9]{4}/,a);print $1"|", a[1]}'| sort -rk1,2 -|uniq -f1|awk '{printf $1}END{printf "xxxxxxxx"}'`|xargs rm -rf
+
+#
+*/1 * * *  *  cd /var/log/nginx/heart_check/&&/bin/bash /var/log/nginx/heart_check/log_to_sql.sh
+1 1 * * * find /var/log/nginx/heart_check/ -mtime +7 -name "*log" -or -name "*sql" -mtime +7 |xargs rm -rf
+*/5 * * * * find /logs/ -name "*log" |xargs -n1 -I{} bash -c "echo  > {} "
+1 1 * * *  cd /logs/&&ls |grep -vwE `ls|awk '{match($0,/(.*?)-[0-9]{4}/,a);print $1"|", a[1]}'| sort -rk1,2 -|uniq -f1|awk '{printf $1}END{printf "xxxxxxxx"}'`|xargs rm -rf
+1 1 * * * find /home/file/*  -mtime +5 -name "*"  ! -name "point" ! -name "certificate" ! -name "scorm" -delete

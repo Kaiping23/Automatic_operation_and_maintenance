@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: #JOB
+  namespace: wmy
+spec:
+  template:
+    metadata:
+      labels:
+        app: #JOB
+        version: dev
+        date: createdate
+    spec:
+#      nodeSelector:
+#        node: node1
+      nodeName: node1
+      restartPolicy: OnFailure
+      containers:
+        - name: #JOB
+          image: registry.cn-shanghai.aliyuncs.com/wmy-frontend/#JOB-dev-release:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: dev
+                optional: false
+          env:
+            - name: appname
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['app']
+          volumeMounts:
+            - name: appproject
+              mountPath: /var/www/project #项目目录
+          ports:
+            - name: #JOB
+              containerPort: 80
+      volumes:
+        - hostPath:
+            path: /var/www/project
+            type: DirectoryOrCreate
+          name: appproject
+
+

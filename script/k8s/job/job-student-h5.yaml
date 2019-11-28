@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: student-h5
+  namespace: wmy
+spec:
+  template:
+    metadata:
+      labels:
+        app: student-h5
+        version: dev
+        date: createdate
+    spec:
+#      nodeSelector:
+#        node: node1
+      nodeName: node1
+      restartPolicy: OnFailure
+      containers:
+        - name: student-h5
+          image: registry.cn-shanghai.aliyuncs.com/wmy-frontend/student-h5-dev-release:latest
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: dev
+                optional: false
+          env:
+            - name: appname
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['app']
+          volumeMounts:
+            - name: appproject
+              mountPath: /var/www/project #项目目录
+          ports:
+            - name: student-h5
+              containerPort: 80
+      volumes:
+        - hostPath:
+            path: /var/www/project
+            type: DirectoryOrCreate
+          name: appproject
+
+

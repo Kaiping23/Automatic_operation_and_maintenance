@@ -1,0 +1,26 @@
+version: '2'
+services:
+  lecturer:
+    # 内存限制10G,主要用于某些应用的限制防止无上限耗尽主机资源
+    mem_limit: 11534336000
+    image: registry.cn-shanghai.aliyuncs.com/wmy-backend/lecturer-develop
+    environment:
+      appname: lecturer
+      active: sit
+      # eureka地址
+      eureka: http://eureka/eureka/
+    stdin_open: true
+    tty: true
+    logging:
+      driver: json-file
+      options:
+        max-size: 100m
+    cpu_shares: 900
+    ports:
+      - 31029:80/tcp
+    #cpus: 9
+    volumes:
+      - /home/file:/home/file
+      - /customproject:/CodePackage
+    labels:
+      io.rancher.container.pull_image: always

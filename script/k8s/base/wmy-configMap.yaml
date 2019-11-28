@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dev
+  namespace: wmy
+data:
+  active: dev
+  eureka: http://eureka:80/eureka/
+  logpath: /logs/
+  loglevel: info
