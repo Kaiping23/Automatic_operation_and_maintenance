@@ -11,8 +11,8 @@ appdir=$5 # 增加项目项目存储路径，为同一服务器多套前端代�
 [[ "" != "$envs" ]] || { echo 未指定发布环境 && exit 1;}
 [[ "" != "$version" ]] || { echo 未指定版本标签,使用latest && version=latest;}
 [[ "" != "$appdir" ]] || {  appdir="/var/www/project";}
-docker login --username=复深蓝开发一中心研发 --password=fulan123wmy registry.cn-shanghai.aliyuncs.com &>/dev/null
-docker login --username=复深蓝开发一中心研发 --password=fulan123wmy registry-vpc.cn-shanghai.aliyuncs.com &>/dev/null
+docker login --username=123 --password=123 registry.cn-shanghai.aliyuncs.com &>/dev/null
+docker login --username=123 --password=123 registry-vpc.cn-shanghai.aliyuncs.com &>/dev/null
 for i in `grep -E "$envs" ${script_dir}/web.conf|awk '{split($2,a,",")}END{for(i in a){print a[i]}}'`
 do
 ip=`echo $i|awk -F":" '{print $1}'`
