@@ -97,6 +97,8 @@ PushJob() {
       real_dir=$(ls | grep -i [^a-zA-Z]$project | xargs -n 1 | grep -v api | awk '{if(length($0)>1){print}}')
       if [[ ! -d "$real_dir" ]]; then
         echo 包含${project}的真实的项目目录不存在,请检查;
+#       cd $BASEDIR && cp -r $project_dir cloud-$project_dir-service && mv cloud-$project_dir-service $project_dir && cd $project_dir
+        real_dir=$(ls | grep -i [^a-zA-Z]$project | xargs -n 1 | grep -v api | awk '{if(length($0)>1){print}}')
         exit 1
       fi
       cd $real_dir
