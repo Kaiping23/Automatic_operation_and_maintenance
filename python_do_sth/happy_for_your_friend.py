@@ -46,6 +46,7 @@ This is a e-mail message.
 # 发送邮件
 smtp = smtplib.SMTP()
 smtp.connect('smtp.qq.com', 25)
-smtp.login('990814268@qq.com', 'pzyhswadxcctbbdb')
+smtp.login('990814268@qq.com', 'secrect')
+# pzyhswadxcctbbdb
 smtp.sendmail('990814268@qq.com', '649786147@qq.com', message.encode('utf-8'))
 smtp.quit()
