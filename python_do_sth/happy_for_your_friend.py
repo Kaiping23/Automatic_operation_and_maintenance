@@ -23,7 +23,7 @@ def get_wether(city, link):
     r = requests.get(url).json()
     msg = '\r\n亲爱的宝贝，今天天气是' + r['data']['forecast'][0]['type'] + '\r\n温度：' + r['data']['forecast'][0]['high'] + '--' + \
           r['data']['forecast'][0]['low'] + '\r\n风：' + r['data']['forecast'][0]['fengli'][9:-3] + '--' + \
-          r['data']['forecast'][0]['fengxiang'] + '\r\n\r\n我到公司啦，么么哒！'
+          r['data']['forecast'][0]['fengxiang']
 
     return str(msg)
 
@@ -41,12 +41,13 @@ message = """From:From 开平 <990814268@qq.com>
 To: To Ivy <649786147@qq.com>
 Subject:亲爱的。请点击查收！
 This is a e-mail message.
-""" + msg
+""" + msg + '\t'+'小可爱，该吃饭啦！'+ '\r\n'+'--最爱你的人儿~'
 
 # 发送邮件
 smtp = smtplib.SMTP()
 smtp.connect('smtp.qq.com', 25)
-smtp.login('990814268@qq.com', 'secrect')
+smtp.login('990814268@qq.com', 'pzyhswadxcctbbdb')
 # pzyhswadxcctbbdb
+# smtp.sendmail('990814268@qq.com', '15237806127@163.com', message.encode('utf-8'))
 smtp.sendmail('990814268@qq.com', '649786147@qq.com', message.encode('utf-8'))
 smtp.quit()
