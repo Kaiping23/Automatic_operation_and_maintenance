@@ -3,13 +3,13 @@
 # @Time    : 2018/7/3 9:53
 # @Author  : lkp
 
-from oss_download.ossbase import Oss
+from ossbase import Oss
 
 
 def down_load(file, bk='km-kj-cc1'):
     # 更改ak,st
-    ak = 'key'
-    st = 'secrect'
+    ak = 'ak'
+    st = 'st'
     alioss = Oss(ak, st, bk)
     res_file = 'result_' + file
     with open(file, encoding='utf-8') as f:
