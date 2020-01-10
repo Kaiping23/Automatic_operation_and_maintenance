@@ -89,9 +89,9 @@ class Oss:
 
 
 if __name__ == '__main__':
-    ak = '***********'
-    st = '***********'
-    bk = 'fulan-test'
+    ak = 'ak'
+    st = 'st'
+    bk = 'km-kj-cc1'
     alioss = Oss(ak, st, bk)
-    # alioss.download_dir('tmp', 'tests')
-    print(alioss.push_file('a.html', 'aaa/aaaa/aaaaaaaaaaa.html'))
+    alioss.download_dir('tmp', 'tests')
+    # print(alioss.push_file('a.html', 'aaa/aaaa/aaaaaaaaaaa.html'))
