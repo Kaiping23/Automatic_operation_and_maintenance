@@ -4,29 +4,52 @@
 # @date 2020/1/5 16:22
 
 
+import requests, json, smtplib
+
+# r = requests.get("http://open.iciba.com/dsapi").json()
+# print(r)
+
+data = {
+    'link': 'http://open.iciba.com/dsapi/',
+    'link2': 'http://wthrcdn.etouch.cn/weather_mini?city=',
+    'city': '天津',
+    'first': '您的小可爱上线啦！\r\n',
+    'last': '\r\n\r\n'
+
+}
+
+
+def get_wether(city, link):
+    url = link + city
+    r = requests.get(url).json()
+    msg = '\r\n亲爱的宝贝，今天天津天气是' + r['data']['forecast'][0]['type'] + '\r\n温度：' + r['data']['forecast'][0]['high'] + '--' + \
+          r['data']['forecast'][0]['low'] + '\r\n风：' + r['data']['forecast'][0]['fengli'][9:-3] + '--' + \
+          r['data']['forecast'][0]['fengxiang']
+
+    return str(msg)
+
+
+# 获取每日一句话
+def get_word(link):
+    r = requests.get(link).json()
+    msg = '\r\n\r\n' + r['content'] + '\r\n\r\n' + r['note']
+    return str(msg)
+
+
+# 构造邮件的文本数据
+msg = data['first'] + get_wether(data['city'], data['link2']) + get_word(data['link']) + data['last']
+message = """From:From 开平 <990814268@qq.com>
+To: To Dear Yao <991265496@qq.com>
+Subject:亲爱的。请点击查收！
+This is a e-mail message.
+""" + msg + '\t' + '小可爱，您的小可爱上线啦！' + '\r\n' + '~您的专属天气预报~'
+
 # 发送邮件
-import smtplib
-
-import string
-
-HOST = "smtp.gmail.com"
-SUBJECT = "Test email from Python"
-TO = "15237806127@163.com"
-FROM = "990814268@qq.com"
-text = "Python rules them all!"
-BODY = string.join((
-    "From:%s" % FROM,
-    "To:%s" % TO,
-    "Subject:%s" % SUBJECT,
-    "",
-    text
-), "\r\n")
-server=smtplib
-
 smtp = smtplib.SMTP()
 smtp.connect('smtp.qq.com', 25)
 smtp.login('990814268@qq.com', 'pzyhswadxcctbbdb')
 # pzyhswadxcctbbdb
-# smtp.sendmail('990814268@qq.com', '15237806127@163.com', message.encode('utf-8'))
-smtp.sendmail('990814268@qq.com', '649786147@qq.com', message.encode('utf-8'))
+smtp.sendmail('990814268@qq.com', '15237806127@163.com', message.encode('utf-8'))
+smtp.sendmail('990814268@qq.com', 'liangkaiping@fulan.com.cn', message.encode('utf-8'))
+print("发送成功！")
 smtp.quit()
