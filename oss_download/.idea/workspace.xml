@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e10f0038-6532-448a-982d-a2238dc7025c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../Service_monitoring/diff_nginx_conf.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Service_monitoring/nginx.conf.v1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Service_monitoring/nginx.conf.v2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Service_monitoring/sed_email.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../everyday.log.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../everyday.log.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/file_down.py" beforeDir="false" afterPath="$PROJECT_DIR$/file_down.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ossbase.py" beforeDir="false" afterPath="$PROJECT_DIR$/ossbase.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/result_scrom.csv" beforeDir="false" afterPath="$PROJECT_DIR$/../Service_monitoring/diff_nginx.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../tmp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../tmp.txt" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1WC19usMxbVe6mGkzrL2Ud3ejFy" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="file_down" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="oss_download" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/file_down.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.file_down" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e10f0038-6532-448a-982d-a2238dc7025c" name="Default Changelist" comment="" />
+      <created>1578638614853</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1578638614853</updated>
+      <workItem from="1578638617443" duration="154000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/oss_download$file_down.coverage" NAME="file_down Coverage Results" MODIFIED="1578638701238" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
