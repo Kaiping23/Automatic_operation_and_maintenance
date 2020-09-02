@@ -1,0 +1,143 @@
+20 7 * * * python /home/lkp/send_message.py &&  echo "`date`: 天津 ---> 发送成功！" >> /var/log/lkp/send_message.log
+20 8 * * * python /home/lkp/send_message_shanghai.py &&  echo "`date`: 上海 --->  发送成功！" >> /var/log/lkp/send_message.log
+* 4 * * * /usr/sbin/ntpdate ntp1.aliyun.com > /dev/null 2>&1
+* 4 * * * /usr/sbin/ntpdate ntp1.aliyun.com > /dev/null 2>&1
+
+cat /home/lkp/send_message_shanghai.py
+
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+# @author lkp
+# @date 2019/12/11 22:44
+
+import requests, json, smtplib
+
+
+# r = requests.get("http://open.iciba.com/dsapi").json()
+# print(r)
+
+data = {
+    'link': 'http://open.iciba.com/dsapi/',
+    'link2': 'http://wthrcdn.etouch.cn/weather_mini?city=',
+    'city': '上海',
+    'first': '您的小可爱上线啦！\r\n',
+    'last': '\r\n\r\n'
+
+}
+
+
+def get_wether(city, link):
+    url = link + city
+    r = requests.get(url).json()
+    msg = '\r\n亲爱的宝贝，今天天气是' + r['data']['forecast'][0]['type'] + '\r\n温度：' + r['data']['forecast'][0]['high'] + '--' + \
+          r['data']['forecast'][0]['low'] + '\r\n风：' + r['data']['forecast'][0]['fengli'][9:-3] + '--' + \
+          r['data']['forecast'][0]['fengxiang']
+
+    return str(msg)
+
+
+# 获取每日一句话
+def get_word(link):
+    r = requests.get(link).json()
+    msg = '\r\n\r\n' + r['content'] + '\r\n\r\n' + r['note']
+    return str(msg)
+
+
+# 构造邮件的文本数据
+msg = data['first'] + get_wether(data['city'], data['link2']) + get_word(data['link']) + data['last']
+message = """From:From 开平 <990814268@qq.com>
+To: To Dear Yao <991265496@qq.com>
+Subject:亲爱的。请点击查收！
+This is a e-mail message.
+""" + msg + '\t' + '小可爱，该起床啦！' + '\r\n' + '--最爱你的人儿~'
+
+# 发送邮件
+smtp = smtplib.SMTP()
+smtp.connect('smtp.qq.com', 25)
+smtp.login('990814268@qq.com', 'pzyhswadxcctbbdb')
+# pzyhswadxcctbbdb
+smtp.sendmail('990814268@qq.com', '15237806127@163.com', message.encode('utf-8'))
+smtp.sendmail('990814268@qq.com', '1509950821@qq.com', message.encode('utf-8'))
+# smtp.sendmail('990814268@qq.com', '991265496@qq.com', message.encode('utf-8'))
+smtp.quit()
+
+
+[root@n32 ~]# cat /home/lkp/send_message.py
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+# @author lkp
+# @date 2019/12/11 22:44
+
+import requests, json, smtplib
+
+# r = requests.get("http://open.iciba.com/dsapi").json()
+# print(r)
+
+data = {
+    'link': 'http://open.iciba.com/dsapi/',
+    'link2': 'http://wthrcdn.etouch.cn/weather_mini?city=',
+    'city': '天津',
+    'first': '您的小可爱上线啦！\r\n',
+    'last': '\r\n\r\n'
+
+}
+
+
+def get_wether(city, link):
+    url = link + city
+    r = requests.get(url).json()
+    msg = '\r\n亲爱的宝贝，今天天津天气是' + r['data']['forecast'][0]['type'] + '\r\n温度：' + r['data']['forecast'][0]['high'] + '--' + \
+          r['data']['forecast'][0]['low'] + '\r\n风：' + r['data']['forecast'][0]['fengli'][9:-3] + '--' + \
+          r['data']['forecast'][0]['fengxiang']
+
+    return str(msg)
+
+
+# 获取每日一句话
+def get_word(link):
+    r = requests.get(link).json()
+    msg = '\r\n\r\n' + r['content'] + '\r\n\r\n' + r['note']
+    return str(msg)
+
+
+# 构造邮件的文本数据
+msg = data['first'] + get_wether(data['city'], data['link2']) + get_word(data['link']) + data['last']
+message = """From:From 开平 <990814268@qq.com>
+To: To Dear Yao <991265496@qq.com>
+Subject:亲爱的。请点击查收！
+This is a e-mail message.
+""" + msg + '\t' + '小可爱，您的小可爱上线啦！' + '\r\n' + '~您的专属天气预报~'
+
+# 发送邮件
+smtp = smtplib.SMTP()
+smtp.connect('smtp.qq.com', 25)
+smtp.login('990814268@qq.com', 'pzyhswadxcctbbdb')
+# pzyhswadxcctbbdb
+smtp.sendmail('990814268@qq.com', '15237806127@163.com', message.encode('utf-8'))
+#smtp.sendmail('990814268@qq.com', '1509950821@qq.com', message.encode('utf-8'))
+smtp.sendmail('990814268@qq.com', '991265496@qq.com', message.encode('utf-8'))
+smtp.quit()
+
+
+[root@n32 ~]# cat /etc/sysconfig/network-scripts/ifcfg-ens192
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=static
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=ens192
+UUID=b76d4ba7-8d9f-424a-a9c9-829995adc7ff
+DEVICE=ens192
+ONBOOT=yes
+IPADDR=192.168.1.32
+PREFIX=24
+GATEWAY=192.168.1.1
+DNS1=114.114.114.114
+DOMAIN=233.5.5.5
+IPV6_PRIVACY=no
