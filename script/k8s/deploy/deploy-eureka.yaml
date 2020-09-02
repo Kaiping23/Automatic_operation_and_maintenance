@@ -1,0 +1,63 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: eureka
+  namespace: wmy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eureka
+      version: dev
+  template:
+    metadata:
+      labels:
+        app: eureka
+        version: dev
+    spec:
+      nodeSelector:
+        node: node2
+      containers:
+        - name: eureka
+          readinessProbe: # 就绪性探测
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 20
+            failureThreshold: 6
+          livenessProbe: #存活性探测
+            tcpSocket:
+              port: 80
+            initialDelaySeconds: 300
+          image: registry.cn-shanghai.aliyuncs.com/wmy-backend/eureka-dev-release:latest
+          envFrom:
+            - configMapRef:
+                name: dev
+                optional: false
+          env:
+            - name: appname
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.labels['app']
+          volumeMounts:
+            - name: logs
+              mountPath: /logs # 日志
+            - name: file
+              mountPath: /home/file
+            - name: customproject
+              mountPath: /CodePackage
+          ports:
+            - name: eureka
+              containerPort: 80
+      volumes:
+        - hostPath:
+            path: /logs/
+            type: DirectoryOrCreate
+          name: logs
+        - hostPath:
+            path: /file
+            type: DirectoryOrCreate
+          name: file
+        - hostPath:
+            path: /customproject
+            type: DirectoryOrCreate
+          name: customproject

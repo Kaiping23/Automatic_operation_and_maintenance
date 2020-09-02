@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: middleware
+
+---
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: limits-with-container
+  namespace: middleware
+spec:
+  limits:
+    - default: # 默认上限
+        cpu: 1000m
+        memory: 12000Mi
+      defaultRequest: #默认保持
+        cpu: 100m
+        memory: 1000Mi
+      max: # 最大上限
+        cpu: "12"
+        memory: 16000Mi
+      type: Container

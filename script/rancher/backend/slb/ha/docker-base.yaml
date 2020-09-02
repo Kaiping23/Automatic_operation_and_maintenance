@@ -1,0 +1,22 @@
+version: '2'
+services:
+  slb:
+    image: rancher/lb-service-haproxy:v0.9.1
+    ports:
+      - 38080:38080/tcp
+      - 46379:46379/tcp
+      - 49200:49200/tcp
+      - 49300:49300/tcp
+      - 51001:51001/tcp
+      - 51002:51002/tcp
+      - 45007:45007/tcp
+      - 43306:43306/tcp
+    labels:
+      io.rancher.container.agent.role: environmentAdmin,agent
+      io.rancher.container.agent_service.drain_provider: 'true'
+      io.rancher.container.create_agent: 'true'
+      io.rancher.scheduler.global: 'true'
+  mysql:
+    image: rancher/external-service
+  redis:
+    image: rancher/external-service

@@ -1,0 +1,18 @@
+version: '2'
+services:
+  mysql:
+    external_ips:
+      - 129.8.8.183
+    start_on_create: true
+  redis:
+    external_ips:
+      - 129.8.8.183
+    start_on_create: true
+  rabbitmq:
+    external_ips:
+      - 129.8.8.183
+    start_on_create: true
+  elasticsearch:
+    external_ips:
+      - 129.8.8.183
+    start_on_create: true
