@@ -30,8 +30,8 @@ docker run  --cpus=4 --memory=8G -d --restart=always --net=host -v /SSD/rabbitmq
 # 创建后端应用
 
 #rancher server -10
- mkdir -p /var/lib/rancher-mysql /var/lib/rancher
- docker run -d -v /var/lib/rancher-mysql:/var/lib/mysql -v /var/lib/rancher:/var/lib/rancher --restart=always  --name=rancher-server -p 8080:8080 rancher/server
+ mkdir -p /var/lib/rancher-mysql /var/lib/rancher2
+ docker run -d -v /var/lib/rancher-mysql:/var/lib/mysql -v /var/lib/rancher2:/var/lib/rancher --restart=always  --name=rancher-server -p 8002:8080 rancher/server
 
 #添加主机
 sudo docker run -e CATTLE_AGENT_IP="192.168.1.22"  --rm --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/rancher:/var/lib/rancher rancher/agent:v1.2.11 http://192.168.1.10:8090/v1/scripts/3AC029BBBB5360537B95:1546214400000:3ObCP9PkcnDdXBNLOTPjlmIw9ZA

@@ -8,8 +8,8 @@ from ossbase import Oss
 
 def down_load(file, bk='km-kj-cc1'):
     # 更改ak,st
-    ak = 'ak'
-    st = 'st'
+    ak = 'LTAIAKXpRNxzL8v6'
+    st = 'cqCx9z8Xp9Q2xf86D2Dxeq0a9YB1Nf'
     alioss = Oss(ak, st, bk)
     res_file = 'result_' + file
     with open(file, encoding='utf-8') as f:

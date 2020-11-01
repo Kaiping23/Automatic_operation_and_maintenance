@@ -145,6 +145,7 @@ PushJob() {
       image_dir=base
     fi
     echo "基础镜像目录为：$image_dir"
+    
 
     docker_dir=$(mktemp -d -p $BASEDIR/)
     cp -r $dockerfile_dir/$image_dir/* $docker_dir

@@ -89,8 +89,8 @@ class Oss:
 
 
 if __name__ == '__main__':
-    ak = 'ak'
-    st = 'st'
+    ak = 'LTAIAKXpRNxzL8v6'
+    st = 'cqCx9z8Xp9Q2xf86D2Dxeq0a9YB1Nf'
     bk = 'km-kj-cc1'
     alioss = Oss(ak, st, bk)
     alioss.download_dir('tmp', 'tests')
