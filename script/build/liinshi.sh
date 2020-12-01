@@ -19,7 +19,11 @@ docker run --cpus=8 --memory=8G --restart=always --name=redis -v $redisdir:/data
 
 #rabbitmq
 mkdir -p /SSD/rabbitmq
-docker run  --cpus=4 --memory=8G -d --restart=always --net=host -v /SSD/rabbitmq:/var/lib/rabbitmq  --name=rabbitmq -e RABBITMQ_DEFAULT_VHOST='/wmy' -e RABBITMQ_DEFAULT_USER=root -e RABBITMQ_DEFAULT_PASS=rabbitmq.linuxs  rabbitmq:3.7-management
+docker run  --cpus=4 --memory=8G -d --restart=always --net=host -v /SSD/rabbitmq:/var/lib/rabbitmq  --name=rabbitmq -e RABBITMQ_DEFAULT_VHOST='/' -e RABBITMQ_DEFAULT_USER=root -e RABBITMQ_DEFAULT_PASS=rabbitmq.linuxs  rabbitmq:3.7-management
+#防止应用报错无法启动，需预先创建队列
+
+mkdir -p /opt/rabbitmq
+docker run  --cpus=4 --memory=8G -d --restart=always --net=host -v /opt/rabbitmq:/var/lib/rabbitmq  --name=rabbitmq -e RABBITMQ_DEFAULT_VHOST='/' -e RABBITMQ_DEFAULT_USER=root -e RABBITMQ_DEFAULT_PASS=rabbitmq.linuxs  rabbitmq:3.7-management
 #防止应用报错无法启动，需预先创建队列
 
 #elasticsearch
@@ -30,8 +34,8 @@ docker run  --cpus=4 --memory=8G -d --restart=always --net=host -v /SSD/rabbitmq
 # 创建后端应用
 
 #rancher server -10
- mkdir -p /var/lib/rancher-mysql /var/lib/rancher2
- docker run -d -v /var/lib/rancher-mysql:/var/lib/mysql -v /var/lib/rancher2:/var/lib/rancher --restart=always  --name=rancher-server -p 8002:8080 rancher/server
+ mkdir -p /var/lib/rancher-mysql /var/lib/rancher
+ docker run -d -v /var/lib/rancher-mysql:/var/lib/mysql -v /var/lib/rancher:/var/lib/rancher --restart=always  --name=rancher-server -p 8081:8080 rancher/server
 
 #添加主机
 sudo docker run -e CATTLE_AGENT_IP="192.168.1.22"  --rm --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/rancher:/var/lib/rancher rancher/agent:v1.2.11 http://192.168.1.10:8090/v1/scripts/3AC029BBBB5360537B95:1546214400000:3ObCP9PkcnDdXBNLOTPjlmIw9ZA
@@ -136,5 +140,22 @@ GRANT insert ON *.*
 
 
 ############### 修改环境
+
+192.168.0.145:8088   admin/Harb123#
+
+192.168.0.151
+
+GRANT ALL PRIVILEGES ON  *.* TO 'root'@'%' IDENTIFIED BY 'Qwe123!@#';
+FLUSH PRIVILEGES;
+
+GRANT ALL PRIVILEGES ON  *.* TO 'ddhSitadmin'@'%' IDENTIFIED BY 'ddh^Sit3306';
+FLUSH PRIVILEGES;
+
+ddhSitadmin	ddh^Sit3306
+ddh^Dev3306
+
+SitDdh^redis6379
+
+
 
 

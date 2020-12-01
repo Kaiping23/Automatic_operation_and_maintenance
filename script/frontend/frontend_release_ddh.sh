@@ -1,5 +1,5 @@
 #!/bin/bash
-
+source /etc/profile
 IP_CONFIG=`cat /JAR_DIR/jenkins-config/frontend/web.conf|grep -w $env|awk '{print$2}'|awk -F":" '{print $1}'`
 
 echo "前端发布目标ip：$IP_CONFIG"
@@ -12,155 +12,125 @@ pwd
 
 function git_pull_admin(){
 	echo "git_pull_admin 当前目录：" && pwd
-	rm -rf sass-admin && echo "已删除旧的项目 sass-admin" || echo "没有这个项目 sass-admin"
-   git clone -b $branch http://liangkaiping:fulan%40123LKP@192.168.0.26/wmy/sass-admin.git
+	#rm -rf itraining-admin && echo "已删除旧的项目 itraining-admin" || echo "没有这个项目 itraining-admin"
+   #git clone -b $branch http://gitlab:Git2020hqjc@39.98.140.255/iTraining/itraining-admin.git
+
    #git checkout -b $branch
    #git pull
-   cd sass-admin
+   cd itraining-admin
    #yarn
    sleep 5
    echo "---------git pull && yarn --------->: "
-    git pull && yarn
+    git pull && yarn && yarn dll
    if [ $? -ne 0 ]; then
      echo "---------- git pull 失败退出 -----------"
 	 exit 1
    else
-     yarn build
+     yarn build:${env}
    fi
-   echo "-----------------  yarn build is ok  -------------------"
-}
-function git_pull_wechat(){
-	echo "git_pull_wechat 当前目录：" && pwd
-	rm -rf wechatWeb && echo "已删除旧的项目 wechatWeb" || echo "没有这个项目 wechatWeb"
-   git clone -b $branch http://liangkaiping:fulan%40123LKP@192.168.0.26/wmy/wechat.git
-   cd wechat
-   #yarn 
-   echo "---------git pull && yarn --------->: "
-    git pull && yarn
-   if [ $? -ne 0 ]; then
-     echo "---------- git pull 失败退出 -----------"
-	 exit 1
-   else
-     yarn build
-   fi
-   echo "-----------------  yarn build is ok  -------------------"
+   echo "-----------------  yarn build sucess  -------------------"
 }
 
-function git_pull_saaswechat(){
+
+
+function git_pull_h5(){
 	echo "git_pull_sasswechat 当前目录：" && pwd
-	rm -rf saas-weichat && echo "已删除旧的项目 saas-weichat" || echo "没有这个项目 saas-weichat"
-   git clone -b $branch http://liangkaiping:fulan%40123LKP@192.168.0.26/wmy/saas-weichat.git && cd saas-weichat
+	#rm -rf  itraining-h5  && echo "已删除旧的项目  itraining-h5" || echo "没有这个项目  itraining-h5 "
+   #git clone -b $branch http://gitlab:Git2020hqjc@39.98.140.255/itraining-frontend/itraining-h5.git 
+   cd itraining-h5
 
-   
-   #yarn 
+
+   #yarn
    echo "---------git pull && npm i --------->: "
-    git pull && npm i
+    git pull && yarn && yarn dll
    if [ $? -ne 0 ]; then
      echo "---------- git pull 失败退出 -----------"
 	 exit 1
    else
-     yarn build
+     yarn build:${env}
    fi
-   echo "-----------------  yarn build is ok  -------------------"
+   echo "-----------------  yarn build sucess   -------------------"
 }
 
-function git_pull_wmypc(){
+function git_pull_pc(){
 	echo "当前目录："
 	pwd
-    
+
 	echo "git_pull_wmypc 当前目录：" && pwd
-	rm -rf wmypcWeb && echo "已删除旧的项目 wmypcWeb" || echo "没有这个项目 wmypcWeb"
-   git clone -b $branch http://liangkaiping:fulan%40123LKP@192.168.0.26/wmy/wmypcWeb.git
-   cd wmypcWeb
-   #yarn 
+	#rm -rf itraining-pc && echo "已删除旧的项目 itraining-pc" || echo "没有这个项目 itraining-pc"
+   #git clone -b $branch http://gitlab:Git2020hqjc@39.98.140.255/itraining-frontend/itraining-pc.git
+   cd itraining-pc
+   #yarn
    echo "---------git pull && yarn --------->: "
-    git pull && yarn
+    git pull && yarn && yarn dll
    if [ $? -ne 0 ]; then
      echo "---------- git pull 失败退出 -----------"
 	 exit 1
    else
-     yarn build
+     yarn build:${env}
    fi
    echo "-----------------  yarn build is ok  -------------------"
 }
 
 function server_admin(){
-   echo "------> 当前目录pwd：" && pwd  
-      
+   echo "------> 当前目录pwd：" && pwd
+
    echo  $branch"环境IP地址："$1
    tar czf dist.tar.gz dist
 
    dataday=`date +'%Y%m%d'`
-   mkdir -p /customproject/jarfile/$branch/sassadmin/$dataday/ && cp dist.tar.gz /customproject/jarfile/$branch/sassadmin/$dataday/
-   version=sassadmin-`date +'%Y-%m-%d %H:%M:%S'`
-   echo $version >>  /customproject/jarfile/$branch/sassadmin/$dataday/version.txt
+   mkdir -p /itrainning-tmp/jarfile/$branch/admin/$dataday/ && cp dist.tar.gz /itrainning-tmp/jarfile/$branch/admin/$dataday/
+   version=$env-admin-`date +'%Y-%m-%d %H:%M:%S'`
+   echo $version >>  /itrainning-tmp/jarfile/$branch/admin/$dataday/version.txt
 
-   ssh -p$ports $1 mv $appdir/sassadmin  $appdir/sassadmin`date +'%Y%m%d%H%M%S'`
-   ssh -p$ports $1 mkdir -p $appdir/sassadmin/dist
-   scp -P$ports -r dist/* root@$1:$appdir/sassadmin/dist/
-   
-   #scp -P$ports -r dist/index.html root@$1:$appdir/admin/dist
-   #scp -P$ports -r vendor root@$1:$appdir/admin/dist
-   #scp -P$ports -r src root@$1:$appdir/admin/dist
+   ssh -p$ports $1 mv $appdir/admin  $appdir/admin`date +'%Y%m%d%H%M%S'`
+   ssh -p$ports $1 mkdir -p $appdir/admin/dist
+   echo $version >>  dist/version.html
+   scp -P$ports -r dist/* root@$1:$appdir/admin/dist/
+
    echo "$version 发布已完成"
-   echo "---------- sassadmin scp 文件已完成 ----------"
+   echo "---------- admin scp 文件已完成 ----------"
    cd ../
 }
 
-function server_wechat(){
-   echo "------> 当前目录pwd：" && pwd 
-   
+function server_h5(){
+   echo "------> 当前目录pwd：" && pwd
+
    echo  $branch"环境IP地址："$1
    tar czf dist.tar.gz dist
 
    dataday=`date +'%Y%m%d'`
-   mkdir -p /customproject/jarfile/$branch/student-h5/$dataday/ && cp dist.tar.gz /customproject/jarfile/$branch/student-h5/$dataday/
-   version=student-h5-`date +'%Y-%m-%d %H:%M:%S'`
-   echo $version >>  /customproject/jarfile/$branch/student-h5/$dataday/version.txt
+   mkdir -p /itrainning-tmp/jarfile/$branch/h5/$dataday/ && cp dist.tar.gz /itrainning-tmp/jarfile/$branch/h5/$dataday/
+   version=$env-h5-`date +'%Y-%m-%d %H:%M:%S'`
+   echo $version >>  /itrainning-tmp/jarfile/$branch/itrainning-h5/$dataday/version.txt
 
-   ssh -p$ports $1 mv $appdir/student-h5  $appdir/student-h5`date +'%Y%m%d%H%M%S'`
-   ssh -p$ports $1 mkdir -p $appdir/student-h5/dist
+   ssh -p$ports $1 mv $appdir/h5  $appdir/h5`date +'%Y%m%d%H%M%S'`
+   ssh -p$ports $1 mkdir -p $appdir/h5/dist
+   echo $version >>  dist/version.html
    scp -P$ports -r dist/* root@$1:$appdir/student-h5/dist/
    echo "$version 发布已完成"
    echo "---------- wechat scp 文件已完成 ----------"
    cd ../
 }
 
-function server_saaswechat(){
-   echo "------> 当前目录pwd：" && pwd 
-   
+function server_pc(){
+   echo "------> 当前目录pwd：" && pwd
+
    echo  $branch"环境IP地址："$1
    tar czf dist.tar.gz dist
 
    dataday=`date +'%Y%m%d'`
-   mkdir -p /customproject/jarfile/$branch/saas-student-h5/$dataday/ && cp dist.tar.gz /customproject/jarfile/$branch/saas-student-h5/$dataday/
-   version=saas-student-h5-`date +'%Y-%m-%d %H:%M:%S'`
-   echo $version >>  /customproject/jarfile/$branch/saas-student-h5/$dataday/version.txt
+   mkdir -p /itrainning-tmp/jarfile/$branch/pc/$dataday/ && cp dist.tar.gz /itrainning-tmp/jarfile/$branch/pc/$dataday/
+   version=$env-pc-`date +'%Y-%m-%d %H:%M:%S'`
 
-   ssh -p$ports $1 mv $appdir/student-h5  $appdir/student-h5`date +'%Y%m%d%H%M%S'`
-   ssh -p$ports $1 mkdir -p $appdir/student-h5/dist
-   scp -P$ports -r dist/* root@$1:$appdir/student-h5/dist/
-   echo "---------- wechat scp 文件已完成 ----------"
-   cd ../
-}
+   echo $version >>  /itrainning-tmp/jarfile/$branch/pc/$dataday/version.txt
 
-function server_wmypc(){
-   echo "------> 当前目录pwd：" && pwd  
-   
-   echo  $branch"环境IP地址："$1
-   tar czf dist.tar.gz dist
-
-   dataday=`date +'%Y%m%d'`
-   mkdir -p /customproject/jarfile/$branch/wmypc/$dataday/ && cp dist.tar.gz /customproject/jarfile/$branch/wmypc/$dataday/
-   version=wmypc-`date +'%Y-%m-%d %H:%M:%S'`
-   
-   echo $version >>  /customproject/jarfile/$branch/wmypc/$dataday/version.txt
-
-   ssh -p$ports $1 mv $appdir/wmypc  $appdir/wmypc`date +'%Y%m%d%H%M%S'`
-   ssh -p$ports $1 mkdir -p $appdir/wmypc/dist
-   scp -P$ports -r dist/* root@$1:$appdir/wmypc/dist/
+   ssh -p$ports $1 mv $appdir/pc  $appdir/pc`date +'%Y%m%d%H%M%S'`
+   ssh -p$ports $1 mkdir -p $appdir/pc/dist
+   echo $version >>  dist/version.html
+   scp -P$ports -r dist/* root@$1:$appdir/pc/dist/
    echo "$version 发布已完成"
-   echo "---------- wmypc scp 文件已完成 ----------"
+   echo "---------- itrainning-pc scp 文件已完成 ----------"
    cd ../
 }
 
@@ -172,27 +142,23 @@ if [ "${branch_build}"x  = "${branch}"x ];then    #选择了develop分支
 	echo "array_build: "$array_build
 	for var_build in ${array_build[@]}
 	do
-		   echo "-------++master++------->>>: "${var_build}   
-		   if [ "${var_build}"x  = "sassadmin"x ];then
+		   echo "-------++${branche}++------->>>: "${var_build}
+		   if [ "${var_build}"x  = "admin"x ];then
 		       echo " ....... admin is running ........ "
 			   git_pull_admin
 			   server_admin $IP_CONFIG
-		   elif [ "${var_build}"x  = "wechat"x ];then
-		       echo " ....... wechat is running ........ "
-			   git_pull_wechat
-			   server_wechat $IP_CONFIG
-         elif [ "${var_build}"x  = "saaswechat"x ];then
-            echo " ....... wechat is running ........ "
-            git_pull_saaswechat
-            server_saaswechat $IP_CONFIG
-		   elif [ "${var_build}"x  = "wmypc"x ];then
+		   elif [ "${var_build}"x  = "h5"x ];then
+		       echo " ....... h5 is running ........ "
+			   git_pull_h5
+			   server_h5 $IP_CONFIG
+		   elif [ "${var_build}"x  = "pc"x ];then
 		       echo " ....... wmypc is running ........ "
-			   git_pull_wmypc
-			   server_wmypc $IP_CONFIG
+			   git_pull_pc
+			   server_pc $IP_CONFIG
 		   else
 			   echo " ....... is error ........ "
 		   fi
-	done	
+	done
 else
     echo "----------------  exit  -------------------"
 fi

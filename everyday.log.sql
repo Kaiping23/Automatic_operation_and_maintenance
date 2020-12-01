@@ -154,9 +154,10 @@ mlk-prod-app2 47.103.156.238
 MarykayAdmin
 MKadmin@123!
 
-API Key已创建
-32D2D94545C0DE4DE5ED
-Nq9DSVvHY9D1jQki8qJR2vLYJUtWiLNoukJp3a23
+
+
+readonly
+k4&tc#SLs5SRBmjDtDKyre9g
 
 
 
